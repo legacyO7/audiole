@@ -1,5 +1,4 @@
-import 'dart:convert';
-import 'dart:io';
+import 'dart:math' as math;
 
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +18,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String playbuttonText;
-
+  String playbuttonText, trackname, title, album, artist;
+  var embededImage = null;
   int currentPosition = 0, duration = 0;
   StreamSubscription _timerSubscription;
 
@@ -47,14 +46,23 @@ class _MyAppState extends State<MyApp> {
         playbuttonText = "Play";
       });
       print("I Stopped it " + playbuttonText + "  $currentPosition  $duration");
-
     } else if (currentPosition == duration) {}
     setState(() => currentPosition = timer);
+  }
+
+  Future<Image> assetThumbToImage(ByteData byteData) async {
+    final Image image = Image.memory(byteData.buffer.asUint8List());
+    return image;
   }
 
   @override
   void initState() {
     playbuttonText = "Play";
+    playbuttonText = "Unknown";
+    trackname = "Unknown";
+    title = "Unknown";
+    album = "Unknown";
+    artist = "Unknown";
     super.initState();
   }
 
@@ -65,34 +73,80 @@ class _MyAppState extends State<MyApp> {
       });
   }
 
+  playButtonHandler() async {
+    await Audiole.playAudiole("/storage/emulated/0/Music/Alan Walker - Sorry.mp3", playbuttonText).then((value) => {
+          setState(() {
+            Map<String, dynamic> map = Map.from(value);
+            playbuttonText = map["playstatus"];
+            duration = map["duration"];
+            if (playbuttonText.startsWith('P')) {
+              _enableTimer();
+              if (playbuttonText == "Play") {
+                artist = map["MEDIA_ARTIST"];
+                trackname = map["MEDIA_TRACK"];
+                title = map["MEDIA_TITLE"];
+                album = map["MEDIA_ALBUM"];
+                embededImage = map["MEDIA_ART"];
+              }
+              print(embededImage);
+            } else
+              _disableTimer();
+          })
+        });
+  }
+
+  Widget infoWidget() {
+    if (playbuttonText != "Play")
+      return Column(
+        children: [
+          if (embededImage != null)
+            Image.memory(
+              embededImage,
+            ),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            title,
+            style: Theme.of(context).textTheme.headline4,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            artist,
+            style: Theme.of(context).textTheme.headline5,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            album,
+            style: Theme.of(context).textTheme.bodyText1,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            trackname,
+            style: Theme.of(context).textTheme.subtitle1,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+        ],
+      );
+    else
+      return Container();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Audiole'),
-        ),
         body: Center(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-          RaisedButton(
-            child: Text(playbuttonText),
-            onPressed: () async {
-              await Audiole.playAudiole("/storage/emulated/0/Music/Alan Walker - Sorry.mp3", playbuttonText)
-                  .then((value) => {
-                        setState(() {
-                          Map<String, dynamic> map = Map.from(value);
-                          playbuttonText = map["playstatus"];
-                          duration = map["duration"];
-                          if (playbuttonText.startsWith('P'))
-                            _enableTimer();
-                          else
-                            _disableTimer();
-                        })
-                      });
-            },
-          ),
+            child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          infoWidget(),
           Center(
             child: Text(
               '${(currentPosition / 60).truncate()} : ${currentPosition % 60}',
@@ -127,6 +181,26 @@ class _MyAppState extends State<MyApp> {
                   String position = value.substring(0, value.length - 2);
                   return "${(int.parse(position) / 60).truncate()} :  ${int.parse(position) % 60} ";
                 }),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              RaisedButton(
+                  child: Transform(
+                    alignment: Alignment.center,
+                    transform: Matrix4.rotationY(math.pi),
+                    child: Icon(Icons.double_arrow_rounded),
+                  ),
+                  onPressed: () {
+                    Audiole.seekAudiole(currentPosition - 5);
+                  }),
+              RaisedButton(child: Text(playbuttonText), onPressed: playButtonHandler),
+              RaisedButton(
+                  child: Icon(Icons.double_arrow_rounded),
+                  onPressed: () {
+                    Audiole.seekAudiole(currentPosition + 5);
+                  }),
+            ],
           )
         ])),
       ),

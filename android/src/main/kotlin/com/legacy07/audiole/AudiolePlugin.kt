@@ -2,6 +2,7 @@ package com.legacy07.audiole
 
 import android.content.*
 import android.content.ContentValues.TAG
+import android.graphics.Bitmap
 import android.media.MediaPlayer
 import android.net.Uri
 import android.util.Log
@@ -15,6 +16,7 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import org.json.JSONObject
+import wseemann.media.FFmpegMediaMetadataRetriever
 import java.util.concurrent.TimeUnit
 
 
@@ -24,7 +26,7 @@ class AudiolePlugin: FlutterPlugin, MethodCallHandler, EventChannel.StreamHandle
   private var context: Context? = null
   private var eventChannel: EventChannel?= null
   private lateinit var mediaPlayer: MediaPlayer
-  private var chargingStateChangeReceiver: BroadcastReceiver? = null
+  private var  mmr: FFmpegMediaMetadataRetriever =  FFmpegMediaMetadataRetriever()
   lateinit var buttonText:String
   private lateinit var channel : MethodChannel
   private var timerSubscription: Disposable? = null
@@ -71,11 +73,20 @@ class AudiolePlugin: FlutterPlugin, MethodCallHandler, EventChannel.StreamHandle
         result.success(seekTo(call.argument<Int>("seekTo")!!)
         )
       }
+      "trackInfo" -> {
+       // result.success(trackInfo(call.argument<String>("uri").toString())
+
+      }
   }}
 
-  fun playAudiole(audioUri: Uri, playstatus: String): HashMap<String, Any> {
+  fun tos(message:String){
+    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+  }
 
+  fun playAudiole(audioUri: Uri, playstatus: String): HashMap<String, Any> {
     buttonText=playstatus
+    val returnMap:HashMap<String,Any> = HashMap<String,Any>()
+
     if(mediaPlayer.isPlaying){
       mediaPlayer.pause()
       buttonText="Resume"
@@ -93,12 +104,15 @@ class AudiolePlugin: FlutterPlugin, MethodCallHandler, EventChannel.StreamHandle
         buttonText="Pause"
         Toast.makeText(context, "media resume", Toast.LENGTH_SHORT).show()
       }
+      mmr.setDataSource(audioUri.toString())
+      returnMap["MEDIA_ARTIST"] = mmr.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ARTIST)
+      returnMap["MEDIA_ALBUM"] = mmr.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ALBUM)
+      returnMap["MEDIA_TITLE"] = mmr.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_TITLE)
+      returnMap["MEDIA_TRACK"] = mmr.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_TRACK)
+      returnMap["MEDIA_ART"] = mmr.embeddedPicture
     }
-
-   val returnMap:HashMap<String,Any> = HashMap<String,Any>()
     returnMap["playstatus"] = buttonText
     returnMap["duration"] = (mediaPlayer.duration/1000).toInt()
-
     return returnMap
   }
 
@@ -124,7 +138,7 @@ class AudiolePlugin: FlutterPlugin, MethodCallHandler, EventChannel.StreamHandle
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                     {
-                     // Log.w(TAG, "emitting timer event ${mediaPlayer.currentPosition}")
+
                       events!!.success((mediaPlayer.currentPosition/1000).toInt())
                     },
                     { error: Throwable ->
