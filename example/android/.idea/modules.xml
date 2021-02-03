@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android.iml" filepath="$PROJECT_DIR$/.idea/modules/android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/android.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/android.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1952856084/android.audiole.iml" filepath="$PROJECT_DIR$/.idea/modules/-1952856084/android.audiole.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/813359402/android.path_provider.iml" filepath="$PROJECT_DIR$/.idea/modules/813359402/android.path_provider.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-852835973/android.permission_handler.iml" filepath="$PROJECT_DIR$/.idea/modules/-852835973/android.permission_handler.iml" />
+    </modules>
+  </component>
+</project>
