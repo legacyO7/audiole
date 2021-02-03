@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -20,7 +21,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   String playbuttonText;
 
-  int currentPosition = 0,duration=0;
+  int currentPosition = 0, duration = 0;
   StreamSubscription _timerSubscription;
 
   void _enableTimer() {
@@ -38,6 +39,16 @@ class _MyAppState extends State<MyApp> {
 
   void _updateTimer(timer) {
     debugPrint("Timer $timer");
+    if (currentPosition == duration) {
+      if (_timerSubscription != null) _disableTimer();
+
+      setState(() {
+        currentPosition = 0;
+        playbuttonText = "Play";
+      });
+      print("I Stopped it " + playbuttonText + "  $currentPosition  $duration");
+
+    } else if (currentPosition == duration) {}
     setState(() => currentPosition = timer);
   }
 
@@ -62,18 +73,19 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Audiole'),
         ),
         body: Center(
-            child: Column(children: [
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
           RaisedButton(
             child: Text(playbuttonText),
             onPressed: () async {
-              await Audiole.playAudiole(
-                      "/storage/emulated/0/Music/Alan Walker - Sorry.mp3", playbuttonText)
+              await Audiole.playAudiole("/storage/emulated/0/Music/Alan Walker - Sorry.mp3", playbuttonText)
                   .then((value) => {
                         setState(() {
                           Map<String, dynamic> map = Map.from(value);
                           playbuttonText = map["playstatus"];
-                          duration=map["duration"];
-                          if (playbuttonText == "Pause")
+                          duration = map["duration"];
+                          if (playbuttonText.startsWith('P'))
                             _enableTimer();
                           else
                             _disableTimer();
@@ -83,27 +95,39 @@ class _MyAppState extends State<MyApp> {
           ),
           Center(
             child: Text(
-              '$currentPosition',
+              '${(currentPosition / 60).truncate()} : ${currentPosition % 60}',
               style: Theme.of(context).textTheme.display1,
             ),
           ),
-          ButtonBar(
-            children: <Widget>[
-              FlatButton(
-                child: const Text('Enable'),
-                onPressed: _enableTimer,
+          FlutterSlider(
+            values: [currentPosition.toDouble()],
+            max: duration.toDouble(),
+            min: 0,
+            onDragCompleted: (handlerIndex, lowerValue, upperValue) async {
+              print(lowerValue);
+              if ((lowerValue).toInt() != null) await Audiole.seekAudiole((lowerValue).toInt());
+            },
+            handlerAnimation: FlutterSliderHandlerAnimation(
+                curve: Curves.elasticOut,
+                reverseCurve: Curves.bounceIn,
+                duration: Duration(milliseconds: 500),
+                scale: 1.5),
+            trackBar: FlutterSliderTrackBar(
+              inactiveTrackBar: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.black12,
+                border: Border.all(width: 3, color: Colors.blue),
               ),
-              FlatButton(
-                child: const Text('Disable'),
-                onPressed: _disableTimer,
-              ),
-            ],
-          ),
-              FlutterSlider(
-                values: [Duration(seconds: currentPosition).inMinutes.toDouble()],
-                max: duration.toDouble(),
-                min: 0,
-              )
+              activeTrackBar:
+                  BoxDecoration(borderRadius: BorderRadius.circular(4), color: Colors.blue.withOpacity(0.5)),
+            ),
+            tooltip: FlutterSliderTooltip(
+                textStyle: Theme.of(context).textTheme.display1,
+                format: (String value) {
+                  String position = value.substring(0, value.length - 2);
+                  return "${(int.parse(position) / 60).truncate()} :  ${int.parse(position) % 60} ";
+                }),
+          )
         ])),
       ),
     );

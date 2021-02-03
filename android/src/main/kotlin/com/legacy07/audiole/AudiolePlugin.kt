@@ -67,6 +67,10 @@ class AudiolePlugin: FlutterPlugin, MethodCallHandler, EventChannel.StreamHandle
                 call.argument<String>("playstatus").toString())
         )
       }
+      "seek" -> {
+        result.success(seekTo(call.argument<Int>("seekTo")!!)
+        )
+      }
   }}
 
   fun playAudiole(audioUri: Uri, playstatus: String): HashMap<String, Any> {
@@ -96,6 +100,10 @@ class AudiolePlugin: FlutterPlugin, MethodCallHandler, EventChannel.StreamHandle
     returnMap["duration"] = (mediaPlayer.duration/1000).toInt()
 
     return returnMap
+  }
+
+  fun seekTo(position:Int){
+    mediaPlayer.seekTo(position*1000)
   }
 
   /**

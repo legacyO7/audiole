@@ -30,4 +30,9 @@ class Audiole {
     final String version = await _channel.invokeMethod('stop');
     return version;
   }
+
+  static Future<String>  seekAudiole(int seekTo) async {
+    final String version = await _channel.invokeMethod('seek',{"seekTo":seekTo});
+    return version;
+  }
 }
