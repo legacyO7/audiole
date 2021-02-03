@@ -37,33 +37,31 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _updateTimer(timer) {
-    debugPrint("Timer $timer");
-    if (currentPosition == duration) {
-      if (_timerSubscription != null) _disableTimer();
+    //debugPrint("Timer $timer");
 
-      setState(() {
-        currentPosition = 0;
-        playbuttonText = "Play";
-      });
-      print("I Stopped it " + playbuttonText + "  $currentPosition  $duration");
-    } else if (currentPosition == duration) {}
-    setState(() => currentPosition = timer);
-  }
+    setState(() {
+      currentPosition = timer;
 
-  Future<Image> assetThumbToImage(ByteData byteData) async {
-    final Image image = Image.memory(byteData.buffer.asUint8List());
-    return image;
+      if (currentPosition == duration) {
+        setState(() {
+          currentPosition = 0;
+          playbuttonText = "Play";
+          _disableTimer();
+          print("I Stopped it " + playbuttonText + "  $currentPosition  $duration");
+        });
+      }
+    });
   }
 
   @override
   void initState() {
     playbuttonText = "Play";
-    playbuttonText = "Unknown";
     trackname = "Unknown";
     title = "Unknown";
     album = "Unknown";
     artist = "Unknown";
     super.initState();
+    checkPermission();
   }
 
   checkPermission() async {
@@ -77,9 +75,8 @@ class _MyAppState extends State<MyApp> {
     await Audiole.playAudiole("/storage/emulated/0/Music/Alan Walker - Sorry.mp3", playbuttonText).then((value) => {
           setState(() {
             Map<String, dynamic> map = Map.from(value);
-            playbuttonText = map["playstatus"];
             duration = map["duration"];
-            if (playbuttonText.startsWith('P')) {
+            if (playbuttonText == "Resume" || playbuttonText == "Play") {
               _enableTimer();
               if (playbuttonText == "Play") {
                 artist = map["MEDIA_ARTIST"];
@@ -88,9 +85,9 @@ class _MyAppState extends State<MyApp> {
                 album = map["MEDIA_ALBUM"];
                 embededImage = map["MEDIA_ART"];
               }
-              print(embededImage);
             } else
               _disableTimer();
+            playbuttonText = map["playstatus"];
           })
         });
   }
@@ -140,50 +137,70 @@ class _MyAppState extends State<MyApp> {
       return Container();
   }
 
+  String musicTicker(int currentPosition) {
+    String min, sec, minPrefex, secPrefix;
+    if (currentPosition / 60 < 10)
+      minPrefex = "0";
+    else
+      minPrefex = "";
+
+    if (currentPosition % 60 < 10)
+      secPrefix = "0";
+    else
+      secPrefix = "";
+
+    return "$minPrefex${(currentPosition / 60).truncate()} : $secPrefix${currentPosition % 60}";
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         body: Center(
-            child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           infoWidget(),
           Center(
             child: Text(
-              '${(currentPosition / 60).truncate()} : ${currentPosition % 60}',
+              musicTicker(currentPosition),
               style: Theme.of(context).textTheme.display1,
             ),
           ),
-          FlutterSlider(
-            values: [currentPosition.toDouble()],
-            max: duration.toDouble(),
-            min: 0,
-            onDragCompleted: (handlerIndex, lowerValue, upperValue) async {
-              print(lowerValue);
-              if ((lowerValue).toInt() != null) await Audiole.seekAudiole((lowerValue).toInt());
-            },
-            handlerAnimation: FlutterSliderHandlerAnimation(
-                curve: Curves.elasticOut,
-                reverseCurve: Curves.bounceIn,
-                duration: Duration(milliseconds: 500),
-                scale: 1.5),
-            trackBar: FlutterSliderTrackBar(
-              inactiveTrackBar: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.black12,
-                border: Border.all(width: 3, color: Colors.blue),
+          Container(
+            child: FlutterSlider(
+              values: [currentPosition.toDouble()],
+              max: duration.toDouble(),
+              min: 0,
+              onDragCompleted: (handlerIndex, lowerValue, upperValue) async {
+                print(lowerValue);
+                if ((lowerValue).toInt() != null) await Audiole.seekAudiole((lowerValue).toInt());
+              },
+              handlerAnimation: FlutterSliderHandlerAnimation(
+                  curve: Curves.elasticOut,
+                  reverseCurve: Curves.bounceIn,
+                  duration: Duration(milliseconds: 500),
+                  scale: 1.5),
+              trackBar: FlutterSliderTrackBar(
+                inactiveTrackBarHeight: 25,
+                activeTrackBarHeight: 20,
+                inactiveTrackBar: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.white70,
+                  border: Border.all(width: 3, color: Colors.blue),
+                ),
+                activeTrackBar:
+                    BoxDecoration(borderRadius: BorderRadius.circular(20), color: Colors.blue.withOpacity(0.5)),
               ),
-              activeTrackBar:
-                  BoxDecoration(borderRadius: BorderRadius.circular(4), color: Colors.blue.withOpacity(0.5)),
+              tooltip: FlutterSliderTooltip(
+                  textStyle: Theme.of(context).textTheme.display1,
+                  format: (String value) {
+                    return musicTicker(int.parse(value.substring(0, value.length - 2)));
+                  }),
             ),
-            tooltip: FlutterSliderTooltip(
-                textStyle: Theme.of(context).textTheme.display1,
-                format: (String value) {
-                  String position = value.substring(0, value.length - 2);
-                  return "${(int.parse(position) / 60).truncate()} :  ${int.parse(position) % 60} ";
-                }),
+            height: 100,
+            width: 400,
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               RaisedButton(
                   child: Transform(
@@ -192,15 +209,28 @@ class _MyAppState extends State<MyApp> {
                     child: Icon(Icons.double_arrow_rounded),
                   ),
                   onPressed: () {
-                    Audiole.seekAudiole(currentPosition - 5);
-                  }),
-              RaisedButton(child: Text(playbuttonText), onPressed: playButtonHandler),
+                    if (currentPosition - 5 >= 0) Audiole.seekAudiole(currentPosition - 5);
+                  },
+                  shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0))),
+              MaterialButton(
+                child: playbuttonText == "Pause" ? Icon(Icons.pause) : Icon(Icons.play_arrow_outlined),
+                onPressed: playButtonHandler,
+                color: Colors.blue,
+                textColor: Colors.white,
+
+                padding: EdgeInsets.all(16),
+                shape: CircleBorder(),
+              ),
               RaisedButton(
+                  shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
                   child: Icon(Icons.double_arrow_rounded),
                   onPressed: () {
-                    Audiole.seekAudiole(currentPosition + 5);
+                    if (currentPosition + 5 <= duration) Audiole.seekAudiole(currentPosition + 5);
                   }),
             ],
+          ),
+          SizedBox(
+            height: 50,
           )
         ])),
       ),

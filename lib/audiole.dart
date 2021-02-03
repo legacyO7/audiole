@@ -21,6 +21,7 @@ class Audiole {
  static Future<bool> get getPermission async {
     var status = await Permission.storage.status;
     if (status.isUndetermined||status.isDenied) {
+      print("Awaiting permission");
       await Permission.storage.request();
     }
     return Permission.storage.isGranted;
