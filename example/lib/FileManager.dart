@@ -60,7 +60,16 @@ class _FileManagerState extends State<FileManager> {
    return GestureDetector(
       child:  Container(
           padding: EdgeInsets.all(20),
-          child: Text("Up a Folder",style: Theme.of(context).textTheme.bodyText1,)),
+          child: Row(
+            children: [
+            Icon(Icons.folder),
+              Padding(
+                child:  Text("Up a Folder",style: Theme.of(context).textTheme.bodyText1,),
+                padding: EdgeInsets.only(left: 30),
+              )
+            ],
+            mainAxisAlignment: MainAxisAlignment.start,
+          )),
       onTap: (){
         getFolderInfo(path.substring(0,path.lastIndexOf('/')));
         // getFolderInfo(path.substring(0,currentFolder.length+1));
@@ -119,7 +128,6 @@ class _FileManagerState extends State<FileManager> {
                            color: Colors.black12,),
                          GestureDetector(
                              onTap: (){
-
                                if(Folderinfo[index].isDir)
                                  getFolderInfo(path+'/'+Folderinfo[index].name);
                                else
@@ -136,7 +144,16 @@ class _FileManagerState extends State<FileManager> {
                                        color: Colors.white10,
                                        // height: 10,
                                        padding: EdgeInsets.all(20),
-                                       child: Text(Folderinfo[index].name,style: Theme.of(context).textTheme.bodyText1,)),
+                                       child: Row(
+                                         children: [
+                                           Folderinfo[index].isDir?Icon(Icons.folder):Icon(Icons.music_note_rounded),
+                                          Padding(
+                                            child:  Text(Folderinfo[index].name,style: Theme.of(context).textTheme.bodyText1,),
+                                            padding: EdgeInsets.only(left: 30),
+                                          )
+                                         ],
+                                         mainAxisAlignment: MainAxisAlignment.start,
+                                       )),
                                  )
                                ],
                              )
