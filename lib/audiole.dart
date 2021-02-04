@@ -36,4 +36,8 @@ class Audiole {
     final String version = await _channel.invokeMethod('seek',{"seekTo":seekTo});
     return version;
   }
+
+  static Future<dynamic>  fileManager(folderUri) async {
+    return await _channel.invokeMethod('folderDetails',{"folderUri":folderUri});
+  }
 }
