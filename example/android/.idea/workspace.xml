@@ -23,18 +23,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9452f52d-d64b-488b-89f9-5057054cb06c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../../android/src/main/kotlin/com/legacy07/audiole/FileManager.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lib/AudioPage.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lib/FileManager.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lib/anime/fade_route.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../android/src/main/kotlin/com/legacy07/audiole/AudiolePlugin.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/src/main/kotlin/com/legacy07/audiole/AudiolePlugin.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/helperclass.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/helperclass.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../lib/audiole.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../../lib/audiole.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/AudioPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/AudioPage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/FileManager.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/FileManager.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

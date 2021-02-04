@@ -101,7 +101,6 @@ class _FileManagerState extends State<FileManager> {
                        child: Text("Up a Folder",style: Theme.of(context).textTheme.bodyText1,)),
                    onTap: (){
                      getFolderInfo(path.substring(0,path.lastIndexOf('/')));
-                     // getFolderInfo(path.substring(0,currentFolder.length+1));
                    },
                  ),
                ),
@@ -120,11 +119,12 @@ class _FileManagerState extends State<FileManager> {
                            color: Colors.black12,),
                          GestureDetector(
                              onTap: (){
+
                                if(Folderinfo[index].isDir)
                                  getFolderInfo(path+'/'+Folderinfo[index].name);
                                else
                                  Navigator.push(context,FadeRoute(page: AudioPage(
-                                     "$path/${Folderinfo[index].name}"
+                                   path,Folderinfo,index
                                  )) );
                              },
                              child:
