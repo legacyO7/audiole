@@ -23,7 +23,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9452f52d-d64b-488b-89f9-5057054cb06c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lib/AudioPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/AudioPage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/FileManager.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/FileManager.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

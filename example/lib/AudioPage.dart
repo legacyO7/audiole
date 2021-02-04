@@ -65,10 +65,7 @@ class _AudioPageState extends State<AudioPage> {
             playbuttonText = "Play";
             _disableTimer();
 
-            if (folderinfo.length > mediaIndex && !folderinfo[mediaIndex + 1].isDir&&folderinfo[mediaIndex+1].name.contains('mp3')) {
-              playButtonHandler("$path/${folderinfo[mediaIndex + 1].name}");
-              mediaIndex++;
-            }
+            nextTrack();
 
             print("I Stopped it " + playbuttonText + "  $currentPosition  $duration");
           });
@@ -129,19 +126,20 @@ class _AudioPageState extends State<AudioPage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SwipeDetector(
-            child:embededImage != null
+            child: embededImage != null
                 ? Image.memory(
-              embededImage,
-              height: MediaQuery.of(context).size.width,
-            )
+                    embededImage,
+                    height: MediaQuery.of(context).size.width,
+                  )
                 : Center(
-              child: Icon(Icons.music_note_outlined, size: MediaQuery.of(context).size.width - 50),
-            ) ,
+                    child: Icon(Icons.music_note_outlined, size: MediaQuery.of(context).size.width - 50),
+                  ),
             onSwipeDown: () {
               Navigator.pop(context);
             },
+            onSwipeLeft: () => nextTrack(),
+            onSwipeRight: ()=>previousTrack(),
           ),
-
           SizedBox(
             height: 10,
           ),
@@ -177,6 +175,24 @@ class _AudioPageState extends State<AudioPage> {
       );
     else
       return Container();
+  }
+
+  nextTrack() {
+    if (folderinfo.length > mediaIndex+1 && !folderinfo[mediaIndex + 1].isDir&&
+        folderinfo[mediaIndex + 1].name.contains('mp3')) {
+      playbuttonText = "Play";
+      playButtonHandler("$path/${folderinfo[mediaIndex + 1].name}");
+      mediaIndex++;
+    }
+  }
+
+  previousTrack() {
+    if (mediaIndex > 0 && !folderinfo[mediaIndex - 1].isDir&&
+        folderinfo[mediaIndex - 1].name.contains('mp3')) {
+      playbuttonText = "Play";
+      playButtonHandler("$path/${folderinfo[mediaIndex - 1].name}");
+      mediaIndex--;
+    }
   }
 
   String musicTicker(int currentPosition) {
@@ -225,8 +241,10 @@ class _AudioPageState extends State<AudioPage> {
                           if ((lowerValue).toInt() != null) await Audiole.seekAudiole((lowerValue).toInt());
                         },
                         handler: FlutterSliderHandler(
-                          child: Icon(Icons.stop_circle,color: Colors.blueAccent,)
-                        ),
+                            child: Icon(
+                          Icons.stop_circle,
+                          color: Colors.blueAccent,
+                        )),
                         handlerAnimation: FlutterSliderHandlerAnimation(
                             curve: Curves.elasticOut,
                             reverseCurve: Curves.bounceIn,
@@ -252,72 +270,60 @@ class _AudioPageState extends State<AudioPage> {
                       height: 100,
                       width: 400,
                     ),
-                   Padding(
-                     child:  ButtonBar(
-                       mainAxisSize: MainAxisSize.min,
-                       children: [
-                         MaterialButton(
-                           child: Icon(
-                             Icons.arrow_back_ios_rounded,
-                             size: 35,
-                           ),
-                           onPressed: () {
-                             if ( mediaIndex >0&& !folderinfo[mediaIndex - 1].isDir) {
-                               playbuttonText="Play";
-                               playButtonHandler("$path/${folderinfo[mediaIndex - 1].name}");
-                               mediaIndex--;
-                             }
-                           },
-                           color: Colors.white70,
-                           padding: EdgeInsets.all(10),
-                           shape: CircleBorder(),
-                         ),
-                         RaisedButton(
-                             child: Transform(
-                               alignment: Alignment.center,
-                               transform: Matrix4.rotationY(math.pi),
-                               child: Icon(Icons.double_arrow_rounded),
-                             ),
-                             onPressed: () {
-                               if (currentPosition - 5 >= 0) Audiole.seekAudiole(currentPosition - 5);
-                             },
-                             shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0))),
-                         MaterialButton(
-                           child: playbuttonText == "Pause" ? Icon(Icons.pause) : Icon(Icons.play_arrow_outlined),
-                           onPressed: () => playButtonHandler("$path/${folderinfo[mediaIndex].name}"),
-                           color: Colors.blue,
-                           textColor: Colors.white,
-                           padding: EdgeInsets.all(16),
-                           shape: CircleBorder(),
-                         ),
-                         RaisedButton(
-                             shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
-                             child: Icon(Icons.double_arrow_rounded),
-                             onPressed: () {
-                               if (currentPosition + 5 <= duration) Audiole.seekAudiole(currentPosition + 5);
-                             }),
-                         MaterialButton(
-                           child: Icon(
-                             Icons.arrow_forward_ios_rounded,
-                             size: 35,
-                           ),
-                           onPressed: () {
-                             if (folderinfo.length > mediaIndex && !folderinfo[mediaIndex + 1].isDir) {
-                               playbuttonText="Play";
-                               playButtonHandler("$path/${folderinfo[mediaIndex + 1].name}");
-                               mediaIndex++;
-                             }
-                           },
-                           color: Colors.white70,
-                           //  textColor: Colors.white,
+                    Padding(
+                      child: ButtonBar(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          MaterialButton(
+                            child: Icon(
+                              Icons.arrow_back_ios_rounded,
+                              size: 35,
+                            ),
+                            onPressed: () => previousTrack(),
+                            color: Colors.white70,
+                            padding: EdgeInsets.all(10),
+                            shape: CircleBorder(),
+                          ),
+                          RaisedButton(
+                              child: Transform(
+                                alignment: Alignment.center,
+                                transform: Matrix4.rotationY(math.pi),
+                                child: Icon(Icons.double_arrow_rounded),
+                              ),
+                              onPressed: () {
+                                if (currentPosition - 5 >= 0) Audiole.seekAudiole(currentPosition - 5);
+                              },
+                              shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0))),
+                          MaterialButton(
+                            child: playbuttonText == "Pause" ? Icon(Icons.pause) : Icon(Icons.play_arrow_outlined),
+                            onPressed: () => playButtonHandler("$path/${folderinfo[mediaIndex].name}"),
+                            color: Colors.blue,
+                            textColor: Colors.white,
+                            padding: EdgeInsets.all(16),
+                            shape: CircleBorder(),
+                          ),
+                          RaisedButton(
+                              shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+                              child: Icon(Icons.double_arrow_rounded),
+                              onPressed: () {
+                                if (currentPosition + 5 <= duration) Audiole.seekAudiole(currentPosition + 5);
+                              }),
+                          MaterialButton(
+                            child: Icon(
+                              Icons.arrow_forward_ios_rounded,
+                              size: 35,
+                            ),
+                            onPressed: () => nextTrack(),
+                            color: Colors.white70,
+                            //  textColor: Colors.white,
 
-                           padding: EdgeInsets.all(10),
-                           shape: CircleBorder(),
-                         ),
-                       ],
-                     ),
-                       padding: EdgeInsets.only(bottom: 0),
-                   )
+                            padding: EdgeInsets.all(10),
+                            shape: CircleBorder(),
+                          ),
+                        ],
+                      ),
+                      padding: EdgeInsets.only(bottom: 0),
+                    )
                   ],
                 ),
               ),
