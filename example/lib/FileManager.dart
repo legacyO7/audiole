@@ -104,15 +104,11 @@ class _FileManagerState extends State<FileManager> {
                    child: Center(child: upFolder(),)
                ):
                Container(
-                 child: GestureDetector(
-                   child:  Container(
-                       padding: EdgeInsets.all(20),
-                       child: Text("Up a Folder",style: Theme.of(context).textTheme.bodyText1,)),
-                   onTap: (){
-                     getFolderInfo(path.substring(0,path.lastIndexOf('/')));
-                   },
-                 ),
+                 child: upFolder(),
                ),
+             Divider(thickness: 3,
+               height: 10,
+               color: Colors.black12,),
              Expanded(
                flex: 1,
                child: ListView.builder(
@@ -146,10 +142,10 @@ class _FileManagerState extends State<FileManager> {
                                        padding: EdgeInsets.all(20),
                                        child: Row(
                                          children: [
-                                           Folderinfo[index].isDir?Icon(Icons.folder):Icon(Icons.music_note_rounded),
-                                          Padding(
+                                          Padding(child:  Folderinfo[index].isDir?Icon(Icons.folder):Icon(Icons.music_note_rounded),
+                                              padding: EdgeInsets.only(right: 20),),
+                                          Flexible(
                                             child:  Text(Folderinfo[index].name,style: Theme.of(context).textTheme.bodyText1,),
-                                            padding: EdgeInsets.only(left: 30),
                                           )
                                          ],
                                          mainAxisAlignment: MainAxisAlignment.start,

@@ -64,6 +64,12 @@ class _AudioPageState extends State<AudioPage> {
             currentPosition = 0;
             playbuttonText = "Play";
             _disableTimer();
+
+            if (folderinfo.length > mediaIndex && !folderinfo[mediaIndex + 1].isDir&&folderinfo[mediaIndex+1].name.contains('mp3')) {
+              playButtonHandler("$path/${folderinfo[mediaIndex + 1].name}");
+              mediaIndex++;
+            }
+
             print("I Stopped it " + playbuttonText + "  $currentPosition  $duration");
           });
         }
