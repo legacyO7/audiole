@@ -14,8 +14,8 @@ import android.widget.Toast
 import androidx.annotation.NonNull
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
-import io.flutter.embedding.engine.plugins.broadcastreceiver.BroadcastReceiverAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
+import io.flutter.embedding.engine.plugins.broadcastreceiver.BroadcastReceiverAware
 import io.flutter.embedding.engine.plugins.broadcastreceiver.BroadcastReceiverPluginBinding
 import io.flutter.plugin.common.*
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
@@ -25,10 +25,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import wseemann.media.FFmpegMediaMetadataRetriever
 import java.util.concurrent.TimeUnit
+import javax.xml.datatype.DatatypeConstants.SECONDS
 
 
 /** AudiolePlugin */
-class AudiolePlugin : FlutterPlugin, MethodCallHandler, EventChannel.StreamHandler, ActivityAware,BroadcastReceiverAware {
+class AudiolePlugin : FlutterPlugin, MethodCallHandler, EventChannel.StreamHandler, ActivityAware, BroadcastReceiverAware {
 
     private lateinit var mContext: Context
     private var mActivity: Activity? = null
@@ -38,7 +39,7 @@ class AudiolePlugin : FlutterPlugin, MethodCallHandler, EventChannel.StreamHandl
     lateinit var buttonText: String
     private lateinit var channel: MethodChannel
     private var timerSubscription: Disposable? = null
-    private val broadcastReceiver: AudioleReceiver= AudioleReceiver()
+    private val broadcastReceiver: AudioleReceiver = AudioleReceiver()
 
 
     /**
@@ -49,8 +50,6 @@ class AudiolePlugin : FlutterPlugin, MethodCallHandler, EventChannel.StreamHandl
     }
 
     private fun onAttachedToEngine(applicationContext: Context, messenger: BinaryMessenger) {
-
-
         mediaPlayer = MediaPlayer();
         this.mContext = applicationContext
 
@@ -61,10 +60,7 @@ class AudiolePlugin : FlutterPlugin, MethodCallHandler, EventChannel.StreamHandl
         eventChannel?.setStreamHandler(this)
 
         val intentFilter = IntentFilter("com.legacy07.audiole")
-        tos("Pass 1")
         mContext.registerReceiver(broadcastReceiver, intentFilter)
-        tos("Pass 2")
-
     }
 
     companion object {
@@ -82,14 +78,17 @@ class AudiolePlugin : FlutterPlugin, MethodCallHandler, EventChannel.StreamHandl
         when (call.method) {
             "getPlatformVersion" -> result.success("Android ${android.os.Build.VERSION.RELEASE}")
             "play" -> {
-                result.success(playAudiole(
-                        Uri.parse(call.argument<String>("uri")),
+                result.success(playinBackground(
+                        call.argument<String>("uri").toString(),
                         call.argument<String>("playstatus").toString())
                 )
             }
             "seek" -> {
                 result.success(seekTo(call.argument<Int>("seekTo")!!)
                 )
+            }
+            "trackInfo" -> {
+                result.success(trackInfo(Uri.parse(call.argument<String>("uri"))))
             }
             "folderDetails" -> {
                 result.success(FileManager().getFileManager(call.argument<String>("folderUri").toString()))
@@ -98,13 +97,35 @@ class AudiolePlugin : FlutterPlugin, MethodCallHandler, EventChannel.StreamHandl
         }
     }
 
-    fun playinBackground(audioUri: String, playstatus: String) {
+    fun trackInfo(audioUri: Uri): HashMap<String, Any> {
+        Log.d("dura", "called me")
+        val returnMap: HashMap<String, Any> = HashMap<String, Any>()
+        mediaPlayer = MediaPlayer.create(mContext, audioUri)
+        try {
+            mmr.setDataSource(audioUri.toString())
+            returnMap["MEDIA_ARTIST"] = mmr.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ARTIST)
+            returnMap["MEDIA_ALBUM"] = mmr.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ALBUM)
+            returnMap["MEDIA_TITLE"] = mmr.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_TITLE)
+            returnMap["MEDIA_TRACK"] = mmr.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_TRACK)
+            returnMap["MEDIA_ART"] = mmr.embeddedPicture
+            mmr.release()
+        } catch (e: Exception) {
+            Log.d("error", e.toString());
+        }
+        returnMap["duration"] = (mediaPlayer.duration / 1000).toInt()
+        mediaPlayer.release()
+        Log.d("dura", returnMap["duration"].toString())
+        return returnMap
+
+    }
+
+    fun playinBackground(audioUri: String, playstatus: String): String {
         val intent = Intent(mActivity, AudioleMediaService::class.java)
-//      if(isMyServiceRunning(AudioleMediaService::class.java))
-//          mActivity?.stopService(intent)
-          intent.putExtra("audioUri", audioUri)
-          intent.putExtra("playstatus", playstatus)
-          mActivity?.startService(intent)
+        intent.putExtra("action", "play")
+        intent.putExtra("audioUri", audioUri)
+        intent.putExtra("playstatus", playstatus)
+        mActivity?.startService(intent)
+        return "done";
     }
 
     private fun isMyServiceRunning(serviceClass: Class<*>): Boolean {
@@ -122,68 +143,19 @@ class AudiolePlugin : FlutterPlugin, MethodCallHandler, EventChannel.StreamHandl
         Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show()
     }
 
-    fun showNotification() {
-//        AudioleNotificationManager(mContext)
-//        mActivity?.finish()
-    }
-
-    fun playAudiole(audioUri: Uri, playstatus: String): HashMap<String, Any> {
-
-        val returnMap: HashMap<String, Any> = HashMap<String, Any>()
-
-        playinBackground(audioUri.toString(), playstatus);
-
-      /*  if (mediaPlayer.isPlaying && buttonText == playstatus) {
-            mediaPlayer.pause()
-            buttonText = "Resume"
-            Toast.makeText(mContext, "media pause", Toast.LENGTH_SHORT).show()
-        } else {
-            buttonText = playstatus
-            if (buttonText == "Play" || mediaPlayer.duration == mediaPlayer.currentPosition) {
-                if (mediaPlayer.isPlaying) {
-                    mediaPlayer.stop()
-                    mediaPlayer.release()
-                }
-
-
-
-                buttonText = "Pause"
-                Toast.makeText(mContext, "media playing", Toast.LENGTH_SHORT).show()
-            } else {
-                mediaPlayer.seekTo(mediaPlayer.currentPosition)
-                mediaPlayer.start()
-                buttonText = "Pause"
-                Toast.makeText(mContext, "media resume", Toast.LENGTH_SHORT).show()
-            }
-
-        }
-        showNotification();*/
-        try {
-            mmr.setDataSource(audioUri.toString())
-            returnMap["MEDIA_ARTIST"] = mmr.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ARTIST)
-            returnMap["MEDIA_ALBUM"] = mmr.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ALBUM)
-            returnMap["MEDIA_TITLE"] = mmr.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_TITLE)
-            returnMap["MEDIA_TRACK"] = mmr.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_TRACK)
-            returnMap["MEDIA_ART"] = mmr.embeddedPicture
-        } catch (e: Exception) {
-            Log.d("error", e.toString());
-        }
-        returnMap["playstatus"] = broadcastReceiver.playstatus ?:"Play"
-        returnMap["duration"] = (broadcastReceiver.duration)
-//      returnMap["duration"] = (mediaPlayer.duration / 1000).toInt()
-        Log.d("playstatus to flutter",returnMap["playstatus"].toString())
-        return returnMap
-    }
-
     fun seekTo(position: Int) {
-        mediaPlayer.seekTo(position * 1000)
+        tos("seeking")
+        val intent = Intent(mActivity, AudioleMediaService::class.java)
+        intent.putExtra("action", "seek")
+        intent.putExtra("seekTo", position * 1000)
+        mActivity?.startService(intent)
     }
 
     /**
      * Break away from the engine
      */
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
-      //  mContext = null
+        //  mContext = null
         eventChannel?.setStreamHandler(null)
         eventChannel = null
     }
@@ -198,7 +170,7 @@ class AudiolePlugin : FlutterPlugin, MethodCallHandler, EventChannel.StreamHandl
                 .subscribe(
                         {
 
-                            Log.d("timer",broadcastReceiver.currentPosition.toString())
+                            //   Log.d("timer", broadcastReceiver.currentPosition.toString())
 
                             events!!.success(broadcastReceiver.currentPosition)
                         },
@@ -234,9 +206,8 @@ class AudiolePlugin : FlutterPlugin, MethodCallHandler, EventChannel.StreamHandl
 
     override fun onDetachedFromActivity() {
         mActivity!!.unregisterReceiver(broadcastReceiver!!)
-       // broadcastReceiver = null
+        // broadcastReceiver = null
     }
-
 
 
     override fun onAttachedToBroadcastReceiver(binding: BroadcastReceiverPluginBinding) {
@@ -253,19 +224,17 @@ class AudiolePlugin : FlutterPlugin, MethodCallHandler, EventChannel.StreamHandl
 
 
 class AudioleReceiver : BroadcastReceiver() {
-    var playstatus:String = "Plause"
-    var duration=1000
-    var currentPosition=0
+
+    var currentPosition: Int
+
+    init {
+        currentPosition = 1
+    }
 
     override fun onReceive(context: Context, intent: Intent) {
-
         val b = intent.extras
-        playstatus = b!!.getString("playstatus").toString()
-        duration = b.getInt("duration",0)
-        currentPosition=duration-b.getInt("currentPosition",0)
-        Log.d("playstauts broadcast",playstatus)
-        Log.d("cp broadcast",currentPosition.toString())
-        Log.d("duration broadcast",duration.toString())
-        ///do something with someDouble
+        currentPosition = b!!.getInt("currentPosition", 0)
+        //  Log.d("cp broadcast", currentPosition.toString())
+
     }
 }

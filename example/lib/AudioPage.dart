@@ -59,7 +59,7 @@ class _AudioPageState extends State<AudioPage> {
       setState(() {
         currentPosition = timer;
 
-        if (currentPosition == duration) {
+        if (currentPosition == duration &&duration!=0) {
           setState(() {
             currentPosition = 0;
             playbuttonText = "Play";
@@ -98,26 +98,31 @@ class _AudioPageState extends State<AudioPage> {
   }
 
   playButtonHandler(String audioUri) async {
-    await Audiole.playAudiole(audioUri, playbuttonText).then((value) => {
-          setState(() {
+    await Audiole.playAudiole(audioUri, playbuttonText).then((value) async {
+      print(value.toString() + " is the return");
+
+      if (playbuttonText == "Resume" || playbuttonText == "Play") {
+        _enableTimer();
+
+        if (playbuttonText == "Play") {
+          await Audiole.audioleTrackInfo(audioUri).then((value) {
             Map<String, dynamic> map = Map.from(value);
+            artist = map["MEDIA_ARTIST"];
+            trackname = map["MEDIA_TRACK"];
+            title = map["MEDIA_TITLE"];
+            album = map["MEDIA_ALBUM"];
+            embededImage = map["MEDIA_ART"];
             duration = map["duration"];
-            if (playbuttonText == "Resume" || playbuttonText == "Play") {
-              _enableTimer();
-              if (playbuttonText == "Play") {
-                artist = map["MEDIA_ARTIST"].toString().replaceAll('\n', ' ');
-                ;
-                trackname = map["MEDIA_TRACK"].toString().replaceAll('\n', ' ');
-                title = map["MEDIA_TITLE"].toString().replaceAll('\n', ' ');
-                album = map["MEDIA_ALBUM"].toString().replaceAll('\n', ' ');
-                ;
-                embededImage = map["MEDIA_ART"];
-              }
-            } else
-              _disableTimer();
-            playbuttonText = map["playstatus"];
-          })
-        });
+          });
+        }
+        playbuttonText = "Pause";
+      } else {
+        _disableTimer();
+        playbuttonText = "Resume";
+      }
+    }).then((value) => setState(() {}));
+
+    print(" final playstatus : $playbuttonText");
   }
 
   Widget infoWidget() {
@@ -138,7 +143,7 @@ class _AudioPageState extends State<AudioPage> {
               Navigator.pop(context);
             },
             onSwipeLeft: () => nextTrack(),
-            onSwipeRight: ()=>previousTrack(),
+            onSwipeRight: () => previousTrack(),
           ),
           SizedBox(
             height: 10,
@@ -178,7 +183,8 @@ class _AudioPageState extends State<AudioPage> {
   }
 
   nextTrack() {
-    if (folderinfo.length > mediaIndex+1 && !folderinfo[mediaIndex + 1].isDir&&
+    if (folderinfo.length > mediaIndex + 1 &&
+        !folderinfo[mediaIndex + 1].isDir &&
         folderinfo[mediaIndex + 1].name.contains('mp3')) {
       playbuttonText = "Play";
       playButtonHandler("$path/${folderinfo[mediaIndex + 1].name}");
@@ -187,8 +193,7 @@ class _AudioPageState extends State<AudioPage> {
   }
 
   previousTrack() {
-    if (mediaIndex > 0 && !folderinfo[mediaIndex - 1].isDir&&
-        folderinfo[mediaIndex - 1].name.contains('mp3')) {
+    if (mediaIndex > 0 && !folderinfo[mediaIndex - 1].isDir && folderinfo[mediaIndex - 1].name.contains('mp3')) {
       playbuttonText = "Play";
       playButtonHandler("$path/${folderinfo[mediaIndex - 1].name}");
       mediaIndex--;

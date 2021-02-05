@@ -18,6 +18,10 @@ class Audiole {
     return (await _channel.invokeMethod('play',{"uri":audioUri,"playstatus":playstatus}));
   }
 
+  static Future<dynamic> audioleTrackInfo(audioUri) async {
+    return (await _channel.invokeMethod('trackInfo',{"uri":audioUri}));
+  }
+
  static Future<bool> get getPermission async {
     var status = await Permission.storage.status;
     if (status.isUndetermined||status.isDenied) {
