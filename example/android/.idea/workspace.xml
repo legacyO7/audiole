@@ -6,6 +6,7 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="woo" />
     <option name="TOOL_WINDOW_LOG_LEVEL" value="debug" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
@@ -28,22 +29,11 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="78fd5571-9e7d-4a48-9e1d-9c8792d592eb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../../android/src/main/res/layout/activity_notify_persistant.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../android/src/main/res/layout/statusbar_notification_small.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_constraintlayout_constraintlayout_2_0_4_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_constraintlayout_constraintlayout_solver_2_0_4.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_core_core_1_3_1_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/build.gradle" afterDir="false" />
+    <list default="true" id="78fd5571-9e7d-4a48-9e1d-9c8792d592eb" name="Default Changelist" comment="set statusbar notification layouts">
       <change beforePath="$PROJECT_DIR$/../../android/src/main/kotlin/com/legacy07/audiole/AudioleNotification/AudioleBackgroundMediaService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/src/main/kotlin/com/legacy07/audiole/AudioleNotification/AudioleBackgroundMediaService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../android/src/main/kotlin/com/legacy07/audiole/AudioleNotification/Notification.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/src/main/kotlin/com/legacy07/audiole/AudioleNotification/AudioleNotification.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../android/src/main/res/layout/statusbar_notification.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/src/main/res/layout/statusbar_notification.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_appcompat_appcompat_1_1_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_appcompat_appcompat_1_2_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_appcompat_appcompat_resources_1_1_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_appcompat_appcompat_resources_1_2_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_localbroadcastmanager_localbroadcastmanager_1_0_0_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../android/src/main/kotlin/com/legacy07/audiole/AudioleNotification/AudioleNotification.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/src/main/kotlin/com/legacy07/audiole/AudioleNotification/AudioleNotification.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../android/src/main/kotlin/com/legacy07/audiole/AudioleNotification/AudioleNotificationHelper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/src/main/kotlin/com/legacy07/audiole/AudioleNotification/AudioleNotificationHelper.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -164,6 +154,14 @@
       <option name="presentableId" value="Default" />
       <updated>1612541640016</updated>
     </task>
+    <task id="LOCAL-00001" summary="set statusbar notification layouts">
+      <created>1612556087142</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1612556087142</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -177,6 +175,10 @@
       </map>
     </option>
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="set statusbar notification layouts" />
+    <option name="LAST_COMMIT_MESSAGE" value="set statusbar notification layouts" />
+  </component>
   <component name="WindowStateProjectService">
     <state x="488" y="1167" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1612553335575">
       <screen x="114" y="1080" width="1280" height="720" />
@@ -186,21 +188,29 @@
       <screen x="114" y="1080" width="1280" height="720" />
     </state>
     <state x="338" y="1176" key="AndroidCreateResourceFileDialog/114.1080.1280.720/0.36.1920.1044@114.1080.1280.720" timestamp="1612553365610" />
-    <state width="1234" height="-45" key="GridCell.Tab.0.bottom" timestamp="1612553180764">
+    <state width="1234" height="3" key="GridCell.Tab.0.bottom" timestamp="1612557636662">
       <screen x="114" y="1080" width="1280" height="720" />
     </state>
-    <state width="1234" height="-45" key="GridCell.Tab.0.bottom/114.1080.1280.720/0.36.1920.1044@114.1080.1280.720" timestamp="1612553180764" />
-    <state width="1234" height="-45" key="GridCell.Tab.0.center" timestamp="1612553180764">
+    <state width="1234" height="3" key="GridCell.Tab.0.bottom/114.1080.1280.720/0.36.1920.1044@114.1080.1280.720" timestamp="1612557636662" />
+    <state width="1234" height="3" key="GridCell.Tab.0.center" timestamp="1612557636662">
       <screen x="114" y="1080" width="1280" height="720" />
     </state>
-    <state width="1234" height="-45" key="GridCell.Tab.0.center/114.1080.1280.720/0.36.1920.1044@114.1080.1280.720" timestamp="1612553180764" />
-    <state width="1234" height="-45" key="GridCell.Tab.0.left" timestamp="1612553180764">
+    <state width="1234" height="3" key="GridCell.Tab.0.center/114.1080.1280.720/0.36.1920.1044@114.1080.1280.720" timestamp="1612557636662" />
+    <state width="1234" height="3" key="GridCell.Tab.0.left" timestamp="1612557636662">
       <screen x="114" y="1080" width="1280" height="720" />
     </state>
-    <state width="1234" height="-45" key="GridCell.Tab.0.left/114.1080.1280.720/0.36.1920.1044@114.1080.1280.720" timestamp="1612553180764" />
-    <state width="1234" height="-45" key="GridCell.Tab.0.right" timestamp="1612553180764">
+    <state width="1234" height="3" key="GridCell.Tab.0.left/114.1080.1280.720/0.36.1920.1044@114.1080.1280.720" timestamp="1612557636662" />
+    <state width="1234" height="3" key="GridCell.Tab.0.right" timestamp="1612557636662">
       <screen x="114" y="1080" width="1280" height="720" />
     </state>
-    <state width="1234" height="-45" key="GridCell.Tab.0.right/114.1080.1280.720/0.36.1920.1044@114.1080.1280.720" timestamp="1612553180764" />
+    <state width="1234" height="3" key="GridCell.Tab.0.right/114.1080.1280.720/0.36.1920.1044@114.1080.1280.720" timestamp="1612557636662" />
+    <state x="350" y="1136" key="Vcs.Push.Dialog.v2" timestamp="1612556089952">
+      <screen x="114" y="1080" width="1280" height="720" />
+    </state>
+    <state x="350" y="1136" key="Vcs.Push.Dialog.v2/114.1080.1280.720/0.36.1920.1044@114.1080.1280.720" timestamp="1612556089952" />
+    <state x="580" y="1187" key="refactoring.ChangeSignatureDialog" timestamp="1612556507239">
+      <screen x="114" y="1080" width="1280" height="720" />
+    </state>
+    <state x="580" y="1187" key="refactoring.ChangeSignatureDialog/114.1080.1280.720/0.36.1920.1044@114.1080.1280.720" timestamp="1612556507239" />
   </component>
 </project>

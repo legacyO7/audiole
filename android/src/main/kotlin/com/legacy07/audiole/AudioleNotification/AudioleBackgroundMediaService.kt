@@ -1,5 +1,6 @@
 package com.legacy07.audiole
 
+import AudioleNotificationManager
 import android.app.*
 import android.content.Intent
 import android.media.MediaPlayer
@@ -9,7 +10,6 @@ import android.os.CountDownTimer
 import android.os.IBinder
 import android.util.Log
 import android.widget.Toast
-import createNotification
 import wseemann.media.FFmpegMediaMetadataRetriever
 
 
@@ -28,7 +28,7 @@ class AudioleMediaService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        val notification =  createNotification(this)
+        val notification = AudioleNotificationManager(this).createNotification();
         startForeground(1, notification)
 
     }
