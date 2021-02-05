@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="wrap_content"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:layout_height="wrap_content">
+
+    <TextView
+        style="@style/TextAppearance.Compat.Notification.Title"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:id="@+id/trackname"
+        android:text="Track Name"
+        android:paddingVertical="10dp"
+        android:textSize="15sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_gravity="center_vertical">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/backbutton"
+            android:text="bwd" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:id="@+id/mainbutton"
+            android:layout_height="wrap_content"
+            android:text="play" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/forwardbutton"
+            android:text="fwd" />
+    </LinearLayout>
+</LinearLayout>

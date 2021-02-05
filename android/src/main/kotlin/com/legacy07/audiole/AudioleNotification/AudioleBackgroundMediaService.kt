@@ -1,19 +1,15 @@
 package com.legacy07.audiole
 
 import android.app.*
-import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.media.MediaPlayer
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.IBinder
 import android.util.Log
-import android.widget.RemoteViews
 import android.widget.Toast
-import androidx.core.app.NotificationCompat
+import createNotification
 import wseemann.media.FFmpegMediaMetadataRetriever
 
 
@@ -32,7 +28,7 @@ class AudioleMediaService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        val notification = createNotification()
+        val notification =  createNotification(this)
         startForeground(1, notification)
 
     }
@@ -126,52 +122,5 @@ class AudioleMediaService : Service() {
             }
             timer.start()
     }
-
-
-    private fun createNotification(): Notification {
-        val notificationChannelId = "RED SERVICE CHANNEL"
-        val contentView = RemoteViews(packageName,
-                R.layout.statusbar_notification)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            val channel = NotificationChannel(
-                    notificationChannelId,
-                    "Audiole Service notification",
-                    NotificationManager.IMPORTANCE_LOW
-            ).let {
-                it.description = "Audiole Media"
-                it.audioAttributes
-                it.enableLights(true)
-                it.lightColor = Color.RED
-                it.enableVibration(true)
-                it
-            }
-            notificationManager.createNotificationChannel(channel)
-        }
-
-        val pendingIntent: PendingIntent = Intent(this, AudiolePlugin::class.java).let { notificationIntent ->
-            PendingIntent.getActivity(this, 0, notificationIntent, 0)
-        }
-
-        // Get the layouts to use in the custom notification
-        val notificationLayout = RemoteViews(packageName, R.layout.statusbar_notification)
-        val notificationLayoutExpanded = RemoteViews(packageName, R.layout.statusbar_notification)
-
-
-        val builder: Notification.Builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) Notification.Builder(
-                this,
-                notificationChannelId
-        ) else Notification.Builder(this)
-
-        return  NotificationCompat.Builder(this, notificationChannelId)
-                .setSmallIcon(R.drawable.ic_nitification)
-                .setVibrate(null)
-                .setStyle(NotificationCompat.DecoratedCustomViewStyle())
-                .setCustomContentView(notificationLayout)
-                .setCustomBigContentView(notificationLayoutExpanded)
-                .setContentIntent(pendingIntent)
-                .build()
-    }
-
 
 }
