@@ -27,7 +27,12 @@ class _FileManagerState extends State<FileManager> {
     Folderinfo=List<FolderInfo>();
     path="";
     parentDirectory="";
-    getFolderInfo(path);
+    checkPermission();
+  }
+
+  checkPermission()async{
+    if(await Audiole.getPermission)
+      getFolderInfo(path);
   }
 
   void getFolderInfo(filepath) async {
@@ -97,7 +102,7 @@ class _FileManagerState extends State<FileManager> {
            crossAxisAlignment: CrossAxisAlignment.start,
            children: [
              SizedBox(height: MediaQuery.of(context).padding.top,),
-             Text("File Manager",style: Theme.of(context).textTheme.headline3,),
+             Text("Audiole",style: Theme.of(context).textTheme.headline3,),
              if(path!=parentDirectory)
                Folderinfo.isEmpty?Expanded(
                    flex: 10,

@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
   <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="debug" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="BranchesTreeState">
@@ -22,9 +28,26 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9452f52d-d64b-488b-89f9-5057054cb06c" name="Default Changelist" comment="">
+    <list default="true" id="b98358b6-4bad-4f56-92b6-dfecd011eb8a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../../android/src/main/kotlin/com/legacy07/audiole/AudioleNotification/AudioleBackgroundMediaService.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../android/src/main/kotlin/com/legacy07/audiole/AudioleNotification/AudioleNotificationHelper.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../android/src/main/kotlin/com/legacy07/audiole/AudioleNotification/Notification.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../android/src/main/res/drawable/ic_nitification.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../android/src/main/res/layout/statusbar_notification.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_localbroadcastmanager_localbroadcastmanager_1_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_stdlib_1_3_71.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_stdlib_common_1_3_71.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlinx_kotlinx_coroutines_core_1_3_7.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../android/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../android/src/main/kotlin/com/legacy07/audiole/AudiolePlugin.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/src/main/kotlin/com/legacy07/audiole/AudiolePlugin.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_stdlib_1_3_50.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_stdlib_common_1_3_50.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/AudioPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/AudioPage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lib/FileManager.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/FileManager.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -38,17 +61,30 @@
       <ProjectState />
     </projectState>
   </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Kotlin Class" />
+        <option value="layoutResourceFile_vertical" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="ProjectId" id="1o078uVdBlhpTXTv7wOlX81UHAV" />
+  <component name="ProjectId" id="1o30llbinnoRDXTmB4EXrKXhOmx" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
@@ -57,10 +93,20 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/misc/android-sdk-linux" />
     <property name="dart.analysis.tool.window.visible" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/../../android/src/main/kotlin" />
+    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
     <property name="show.migrate.to.gradle.popup" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.legacy07.audiole" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/../../android/src/main/java/com/legacy07/audiole" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
@@ -133,11 +179,11 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="9452f52d-d64b-488b-89f9-5057054cb06c" name="Default Changelist" comment="" />
-      <created>1612411497368</created>
+      <changelist id="b98358b6-4bad-4f56-92b6-dfecd011eb8a" name="Default Changelist" comment="" />
+      <created>1612500119663</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1612411497368</updated>
+      <updated>1612500119663</updated>
     </task>
     <servers />
   </component>
@@ -153,9 +199,57 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state x="251" y="360" key="SettingsEditor" timestamp="1612412160529">
-      <screen x="0" y="36" width="1920" height="1044" />
+    <state x="533" y="1137" key="#com.intellij.ide.util.MemberChooser" timestamp="1612523466683">
+      <screen x="114" y="1080" width="1280" height="720" />
     </state>
-    <state x="251" y="360" key="SettingsEditor/114.1080.1280.720/0.36.1920.1044@114.1080.1280.720" timestamp="1612412160529" />
+    <state x="533" y="1137" key="#com.intellij.ide.util.MemberChooser/114.1080.1280.720/0.36.1920.1044@114.1080.1280.720" timestamp="1612523466683" />
+    <state x="488" y="1196" key="#com.intellij.ide.util.PackageChooserDialog" timestamp="1612502186124">
+      <screen x="114" y="1080" width="1280" height="720" />
+    </state>
+    <state x="488" y="1196" key="#com.intellij.ide.util.PackageChooserDialog/114.1080.1280.720/0.36.1920.1044@114.1080.1280.720" timestamp="1612502186124" />
+    <state x="263" y="1291" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.packages" timestamp="1612502191063">
+      <screen x="114" y="1080" width="1280" height="720" />
+    </state>
+    <state x="263" y="1291" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.packages/114.1080.1280.720/0.36.1920.1044@114.1080.1280.720" timestamp="1612502191063" />
+    <state x="338" y="1176" key="AndroidCreateResourceFileDialog" timestamp="1612503310511">
+      <screen x="114" y="1080" width="1280" height="720" />
+    </state>
+    <state x="338" y="1176" key="AndroidCreateResourceFileDialog/114.1080.1280.720/0.36.1920.1044@114.1080.1280.720" timestamp="1612503310511" />
+    <state x="570" y="1175" key="AndroidCreateXmlResourceDialog" timestamp="1612503376774">
+      <screen x="114" y="1080" width="1280" height="720" />
+    </state>
+    <state x="570" y="1175" key="AndroidCreateXmlResourceDialog/114.1080.1280.720/0.36.1920.1044@114.1080.1280.720" timestamp="1612503376774" />
+    <state x="538" y="1176" key="FileChooserDialogImpl" timestamp="1612511281181">
+      <screen x="114" y="1080" width="1280" height="720" />
+    </state>
+    <state x="538" y="1176" key="FileChooserDialogImpl/114.1080.1280.720/0.36.1920.1044@114.1080.1280.720" timestamp="1612511281181" />
+    <state width="1234" height="78" key="GridCell.Tab.0.bottom" timestamp="1612518953317">
+      <screen x="114" y="1080" width="1280" height="720" />
+    </state>
+    <state width="1234" height="78" key="GridCell.Tab.0.bottom/114.1080.1280.720/0.36.1920.1044@114.1080.1280.720" timestamp="1612518953317" />
+    <state width="1234" height="78" key="GridCell.Tab.0.center" timestamp="1612518953317">
+      <screen x="114" y="1080" width="1280" height="720" />
+    </state>
+    <state width="1234" height="78" key="GridCell.Tab.0.center/114.1080.1280.720/0.36.1920.1044@114.1080.1280.720" timestamp="1612518953317" />
+    <state width="1234" height="78" key="GridCell.Tab.0.left" timestamp="1612518953317">
+      <screen x="114" y="1080" width="1280" height="720" />
+    </state>
+    <state width="1234" height="78" key="GridCell.Tab.0.left/114.1080.1280.720/0.36.1920.1044@114.1080.1280.720" timestamp="1612518953317" />
+    <state width="1234" height="78" key="GridCell.Tab.0.right" timestamp="1612518953317">
+      <screen x="114" y="1080" width="1280" height="720" />
+    </state>
+    <state width="1234" height="78" key="GridCell.Tab.0.right/114.1080.1280.720/0.36.1920.1044@114.1080.1280.720" timestamp="1612518953317" />
+    <state x="552" y="1198" width="641" height="445" key="chooseDestDirectoryDialog" timestamp="1612502100401">
+      <screen x="114" y="1080" width="1280" height="720" />
+    </state>
+    <state x="552" y="1198" width="641" height="445" key="chooseDestDirectoryDialog/114.1080.1280.720/0.36.1920.1044@114.1080.1280.720" timestamp="1612502100401" />
+    <state x="580" y="1187" key="refactoring.ChangeSignatureDialog" timestamp="1612519431514">
+      <screen x="114" y="1080" width="1280" height="720" />
+    </state>
+    <state x="580" y="1187" key="refactoring.ChangeSignatureDialog/114.1080.1280.720/0.36.1920.1044@114.1080.1280.720" timestamp="1612519431514" />
+    <state x="417" y="1082" width="672" height="678" key="search.everywhere.popup" timestamp="1612501666336">
+      <screen x="114" y="1080" width="1280" height="720" />
+    </state>
+    <state x="417" y="1082" width="672" height="678" key="search.everywhere.popup/114.1080.1280.720/0.36.1920.1044@114.1080.1280.720" timestamp="1612501666336" />
   </component>
 </project>

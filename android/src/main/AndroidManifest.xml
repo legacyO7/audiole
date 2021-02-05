@@ -1,3 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.legacy07.audiole">
+    package="com.legacy07.audiole">
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <application>
+        <service
+            android:name=".AudioleMediaService"
+            android:enabled="true"
+            android:exported="false"
+            android:process=":ServiceProcess"
+            android:launchMode="singleTop"
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
+
+        <receiver android:name=".AudioleReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.legacy07.audiole" />
+            </intent-filter>
+        </receiver>
+    </application>
+
 </manifest>
